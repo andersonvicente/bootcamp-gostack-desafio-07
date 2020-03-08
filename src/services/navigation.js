@@ -1,22 +1,17 @@
 import { NavigationActions } from 'react-navigation';
-// import { NavigationActions } from 'react-navigation-stack';
 
-let navigator;
+const config = {};
 
-function setNavigator(ref) {
-  navigator = ref;
+function setNavigator(nav) {
+  if (nav) {
+    config.navigator = nav;
+  }
 }
-
 function navigate(routeName, params) {
-  navigator.dispath(
-    NavigationActions.navigate({
-      routeName,
-      params,
-    })
-  );
+  if (config.navigator && routeName) {
+    const action = NavigationActions.navigate({ routeName, params });
+    config.navigator.dispatch(action);
+  }
 }
 
-export default {
-  navigate,
-  setNavigator,
-};
+export default { setNavigator, navigate };
